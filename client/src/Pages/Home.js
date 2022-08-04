@@ -6,8 +6,8 @@ import MatchStats from '../Components/MatchStats';
 function Home() {
     const [arr, setArr] = useState(null);
 
-    const url = "https://api.pubg.com/shards/steam/players?filter[playerNames]=Bakern999"
-    const auth = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NzdlMTFmMC1mNWVlLTAxM2EtY2ZmMy0wODM2YzIwNWY4NzgiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjU5NTk1MzQ3LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii0wNGYyZTljYy1kZmVhLTRhMWYtOWJkZi1lYjE1OGE2M2M0YjcifQ.zBEjFzJ1SRpv0EoM-ut44oqJbm37dPcwTBwFvFRbwro"
+    const url = "https://api.pubg.com/shards/steam/players?filter[playerNames]=Bakern999";
+    const auth = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NzdlMTFmMC1mNWVlLTAxM2EtY2ZmMy0wODM2YzIwNWY4NzgiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjU5NTk1MzQ3LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii0wNGYyZTljYy1kZmVhLTRhMWYtOWJkZi1lYjE1OGE2M2M0YjcifQ.zBEjFzJ1SRpv0EoM-ut44oqJbm37dPcwTBwFvFRbwro";
 
     useEffect(() => {
         axios({
@@ -20,7 +20,7 @@ function Home() {
         }).then(function (res) {
             setArr(res.data);
         });
-    }, [url])
+    }, [url]);
 
     if(arr) {
         return(
