@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 
+import MatchStats from '../Components/MatchStats';
+
 function Home() {
-    const url = "https://pubg.op.gg/api/users/59fe361a66d17500012db6bd/ranked-stats?season=pc-2018-18&queue_size=1&mode=fpp";
-    const [data, setData] = useState(null);
+    const [arr, setArr] = useState(null);
+
+    const url = "https://api.pubg.com/shards/steam/players?filter[playerNames]=Bakern999"
+    const auth = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NzdlMTFmMC1mNWVlLTAxM2EtY2ZmMy0wODM2YzIwNWY4NzgiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjU5NTk1MzQ3LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii0wNGYyZTljYy1kZmVhLTRhMWYtOWJkZi1lYjE1OGE2M2M0YjcifQ.zBEjFzJ1SRpv0EoM-ut44oqJbm37dPcwTBwFvFRbwro"
 
     useEffect(() => {
-        axios.get(url)
-        .then(res => {
-            setData(res.data);
-        })
-    }, [url]);
+        axios({
+            method: 'get',
+            url: url,
+            headers: {
+                "Accept": 'application/vnd.api+json',
+                "Authorization": auth,
+            },
+        }).then(function (res) {
+            setArr(res.data);
+        });
+    }, [url])
 
-    if(data) {
+    if(arr) {
         return(
             <div>
-                {console.log(data)}
+                <MatchStats matches={arr.data[0].relationships.matches.data} />
             </div>
         )
     }
