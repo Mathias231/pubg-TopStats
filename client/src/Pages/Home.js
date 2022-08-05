@@ -17,7 +17,7 @@ function Home() {
                 "Accept": 'application/vnd.api+json',
                 "Authorization": auth,
             },
-        }).then(function (res) {
+        }).then(res => {
             setArr(res.data);
         });
     }, [url]);
