@@ -7,7 +7,11 @@ console.log(props)
   console.log(username)
 
   return (
-    <div>complete</div>
+    <div className='grid grid-cols-3 mt-1'>
+      <div className="bg-slate-200">{username} </div>
+      <div className="bg-slate-200">Match</div>
+      <div className="bg-slate-200">03</div>
+    </div>
   )
 }
 
