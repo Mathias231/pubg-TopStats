@@ -25,7 +25,7 @@ function Home() {
 
     if(user) {
         return(
-            <div>
+            <div className='container mx-auto'>
                 <MatchStats matches={user.data[0]} />
             </div>
         )
