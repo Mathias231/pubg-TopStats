@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 
+import PlayerStats from '../Components/PlayerStats';
 import MatchStats from '../Components/MatchStats';
 
 function Home() {
@@ -22,11 +23,18 @@ function Home() {
         });
     }, [url]);
 
-
     if(user) {
         return(
             <div className='container mx-auto'>
-                <MatchStats matches={user.data[0]} />
+                <div className='grid grid-cols-3 mt-1'>
+                    <div className="bg-slate-200">
+                        <PlayerStats matches={user.data[0]} />
+                    </div>
+                    <div className="bg-slate-200">
+                        <MatchStats matches={user.data[0].relationships.matches.data} />
+                    </div>
+                    <div className="bg-slate-200">03</div>
+                </div>
             </div>
         )
     }
