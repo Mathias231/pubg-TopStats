@@ -22,7 +22,7 @@ function MatchStats(props) {
   }, []);
 
   return (
-    <div>MatchStats</div>
+    <div>MatchSwtats</div>
   )
 }
 
