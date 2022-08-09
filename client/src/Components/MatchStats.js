@@ -3,7 +3,7 @@ import axios from 'axios'
 
 function MatchStats(props) {
   const [data] = useState(props.matches.slice(0, 5))
-
+  
   useEffect(() => {
     const matchList = [];
     console.log(matchList)
@@ -19,10 +19,10 @@ function MatchStats(props) {
     });
       return true;
     })
-  }, []);
+  }, [data]);
 
   return (
-    <div>MatchSwtats</div>
+    <div>MatchStats</div>
   )
 }
 
