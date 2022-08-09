@@ -1,17 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 function MatchStats(props) {
-  // Get X data
-console.log(props)
-  const username = props.matches.attributes.name;
-  console.log(username)
+  const [data] = useState(props.matches.slice(0, 5))
+
+  useEffect(() => {
+    const matchList = [];
+    console.log(matchList)
+    data.map((data) => {
+      axios({
+        method: 'get',
+        url: 'https://api.pubg.com/shards/steam/matches/' + data.id,
+        headers: {
+            "Accept": 'application/vnd.api+json',
+        },
+    }).then(res => {
+      matchList.push(res.data)
+    });
+      return true;
+    })
+  }, []);
 
   return (
-    <div className='grid grid-cols-3 mt-1'>
-      <div className="bg-slate-200">{username} </div>
-      <div className="bg-slate-200">Match</div>
-      <div className="bg-slate-200">03</div>
-    </div>
+    <div>MatchStats</div>
   )
 }
 
