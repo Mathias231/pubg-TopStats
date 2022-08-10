@@ -22,7 +22,7 @@ function Home() {
             setUser(res.data);
         });
     }, [url]);
-    
+
     if(user) {
         return(
             <div className='container mx-auto'>
