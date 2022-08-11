@@ -24,19 +24,26 @@ function MatchStats(props) {
     }
     // Updates matchList with matchData
     setMatchList(matchData)
-  }, [data])
+  }, [data]);
 
   // Run async function
   useEffect(() => {
     nut();
-  }, [nut])
+  }, [nut]);
+      
+  //Logging MatchList
+  console.log(matchList);
 
   return (
-    <div>MatchStats
+    <div className='space-y-2'>
+      <h1 className='text-center text-xl'>MatchStats</h1>
       {matchList.map((data) => (
-        <h1 key={data.data.id}>www</h1>
+        <div className='border border-indigo-500 shadow-md' key={data.data.id}>
+          <h3 className='font-bold'>Time: {data.data.attributes.createdAt.slice(0, 10)}</h3>
+          <h3 className='font-bold' key={data.data.id}>Map: {data.data.attributes.mapName}</h3>
+          <h3 className='font-bold'>Gamemode: {data.data.attributes.gameMode}</h3>
+        </div>
       ))}
-
     </div>
   )
 }
