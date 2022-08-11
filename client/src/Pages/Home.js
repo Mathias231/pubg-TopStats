@@ -26,10 +26,13 @@ function Home() {
     if(user) {
         return(
             <div className='container mx-auto'>
-                <div className='grid grid-cols-3 mt-1'>
-                    <div className="bg-slate-200">
+                <div class="col-start-1 col-end-7 mt-2 bg-slate-200">
+                <div className="w-48 bg-slate-200">
                         <PlayerStats matches={user.data[0]} />
                     </div>
+                </div>
+
+                <div className='grid grid-cols-2 mt-1 space-x-4'>
                     <div className="bg-slate-200">
                         <MatchStats matches={user.data[0].relationships.matches.data} />
                     </div>
