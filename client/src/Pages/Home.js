@@ -3,12 +3,12 @@ import axios from 'axios';
 
 import PlayerStats from '../Components/PlayerStats';
 import MatchStats from '../Components/MatchStats';
+import MatchDisplay from '../Components/MatchDisplay';
 
 function Home() {
     const [user, setUser] = useState(null);
     const [matchId, setMatchId] = useState();
-    console.log(matchId);
-    
+
     const url = "https://api.pubg.com/shards/steam/players?filter[playerNames]=Bakern999";
     const auth = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NzdlMTFmMC1mNWVlLTAxM2EtY2ZmMy0wODM2YzIwNWY4NzgiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjU5NTk1MzQ3LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii0wNGYyZTljYy1kZmVhLTRhMWYtOWJkZi1lYjE1OGE2M2M0YjcifQ.zBEjFzJ1SRpv0EoM-ut44oqJbm37dPcwTBwFvFRbwro";
 
@@ -38,7 +38,9 @@ function Home() {
                     <div className="">
                         <MatchStats changeData={(matchId) => setMatchId(matchId)} matches={user.data[0].relationships.matches.data} />
                     </div>
-                    <div className="">03</div>
+                    <div className="">
+                        <MatchDisplay matchId={matchId} />
+                    </div>
                 </div>
             </div>
         )
