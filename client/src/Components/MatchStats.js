@@ -32,11 +32,11 @@ function MatchStats(props) {
   }, [nut]);
       
   //Logging MatchList
-  console.log(matchList);
+  // console.log(matchList);
 
   return (
     <div className='space-y-2'>
-      <h1 className='text-center text-xl'>MatchStats</h1>
+      <h1 className='text-center text-xl'>Latest Matches</h1>
       <div className='grid grid-cols-4'>
             <div><h3 className='font-bold bg-slate-400'>Date</h3></div>
             <div><h3 className='font-bold bg-slate-400'>Map</h3></div>
@@ -51,7 +51,7 @@ function MatchStats(props) {
             <div><h3 className='font-bold'>{data.data.attributes.createdAt.slice(0, 10)}</h3></div>
             <div><h3 className='font-bold'>{data.data.attributes.mapName}</h3></div>
             <div><h3 className='font-bold'>{data.data.attributes.gameMode}</h3></div>
-            <div><button key={data.data.id} onClick={() => props.changeData(data.data.id)} className='rounded-md p-1 bg-indigo-500 text-white hover:bg-indigo-400'>More match info</button></div>
+            <div><button key={data.data.id} onClick={() => props.changeData(data.data.id)} className='rounded-md p-1 bg-indigo-500 text-white hover:bg-indigo-400 focus:ring focus:ring-lime-500'>More match info</button></div>
           </div>
         </div>
       ))}
