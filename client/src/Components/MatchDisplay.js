@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 function MatchDisplay(props) {
     let matchId = props.matchId
     const [matchData, setMatchData] = useState([])
     
-    const fetchMatchData = useCallback(async () => {
+    const fetchMatchData = (() => {
         axios({
             method: 'get',
             url: "https://api.pubg.com/shards/steam/matches/" + matchId,
@@ -22,7 +22,9 @@ function MatchDisplay(props) {
     }, [matchId])
     console.log(matchData)
     return (
-        <div>MatchDisplay: {matchId}</div>
+        <div>
+            <h1 className='text-center text-xl'>Match Data</h1>
+        </div>
     )
 }
 
