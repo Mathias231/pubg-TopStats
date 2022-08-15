@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 
 function MatchStats(props) {
-  // Data from parent script and slice all down to 4
-  const [data] = useState(props.matches.slice(0, 11));
+  // Data from parent script and slice all down to 10
+  const [data] = useState(props.matches.slice(0, 8));
   const [matchList, setMatchList] = useState([]);
 
   const nut = useCallback(async () => {
