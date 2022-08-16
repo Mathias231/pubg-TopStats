@@ -40,8 +40,10 @@ function MatchStats(props) {
     let attributes = match.data.attributes;
     let players = match.included;
     
+    // Finding player in array
     let player = players.find((player) => {
       if(player && player.attributes && typeof player.attributes.stats === "object" && typeof player.attributes.stats.name == "string") {
+        // Returning player "username"
         return player.attributes.stats.name.toLowerCase() === "bakern999";
       }
     })
@@ -65,7 +67,7 @@ function MatchStats(props) {
                 <h3 className='font-bold bg-slate-400'>Match: {attributes.matchType}</h3>
             </div>
         </div>
-        {playerAttr.heals}
+        {playerAttr.heals + " heals"}
     </div>
     )
   }
