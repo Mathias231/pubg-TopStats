@@ -3,11 +3,9 @@ import axios from 'axios';
 
 import PlayerStats from '../Components/PlayerStats';
 import MatchStats from '../Components/MatchStats';
-import MatchDisplay from '../Components/MatchDisplay';
 
 function Home() {
     const [user, setUser] = useState(null);
-    const [matchId, setMatchId] = useState();
 
     const url = "https://api.pubg.com/shards/steam/players?filter[playerNames]=Bakern999";
     const auth = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NzdlMTFmMC1mNWVlLTAxM2EtY2ZmMy0wODM2YzIwNWY4NzgiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjU5NTk1MzQ3LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii0wNGYyZTljYy1kZmVhLTRhMWYtOWJkZi1lYjE1OGE2M2M0YjcifQ.zBEjFzJ1SRpv0EoM-ut44oqJbm37dPcwTBwFvFRbwro";
@@ -29,19 +27,12 @@ function Home() {
         return(
             <div className='container mx-auto'>
                 <div className="col-start-1 col-end-7 mt-2 bg-slate-200">
-                <div className="w-48 bg-slate-200">
+                    <div className="w-48 bg-slate-200">
                         <PlayerStats matches={user.data[0]} />
                     </div>
                 </div>
 
-                <div className='grid grid-cols-2 mt-1 space-x-4'>
-                    <div className="">
-                        <MatchStats changeData={(matchId) => setMatchId(matchId)} matches={user.data[0].relationships.matches.data} />
-                    </div>
-                    <div className="">
-                        <MatchDisplay matchId={matchId} />
-                    </div>
-                </div>
+                <MatchStats matches={user.data[0].relationships.matches.data} />
             </div>
         )
     }
