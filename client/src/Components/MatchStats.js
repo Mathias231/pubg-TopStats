@@ -49,7 +49,7 @@ function MatchStats(props) {
     })
 
     let playerAttr = player.attributes.stats;
-
+    console.log(playerAttr)
     setSelectedMatch(
       <div className="matchData">
         <h1 className='text-center text-xl'>Match Data</h1>
@@ -67,13 +67,21 @@ function MatchStats(props) {
                 <h3 className='font-bold bg-slate-400'>Match: {attributes.matchType}</h3>
             </div>
         </div>
-        {playerAttr.heals + " heals"}
+        <div className='grid grid-cols-2 mt-2'>
+          <div>
+            {playerAttr.heals + " heals"}
+            {/* Player stats  */}
+          </div>
+          <div>
+            {/* table */}
+          </div>
+        </div>
     </div>
     )
   }
 
   //Logging MatchList
-  console.log(matchList);
+  // console.log(matchList);
  
   return (
   <div className='grid grid-cols-2 mt-1 space-x-4'>
@@ -94,7 +102,10 @@ function MatchStats(props) {
               <div><h3 className='font-bold'>{data.data.attributes.createdAt.slice(0, 10)}</h3></div>
               <div><h3 className='font-bold'>{data.data.attributes.mapName}</h3></div>
               <div><h3 className='font-bold'>{data.data.attributes.gameMode}</h3></div>
-              <div><button key={data.data.id} id={i}{...i++} onClick={displayMatchData} className='rounded-md p-1 bg-indigo-500 text-white hover:bg-indigo-400 focus:ring focus:ring-lime-500'>More match info</button></div>
+              <div><button 
+              key={data.data.id} id={i}{...i++} 
+              onClick={displayMatchData} 
+              className='rounded-md p-1 bg-indigo-500 text-white hover:bg-indigo-400 focus:ring focus:ring-lime-500'>More match info</button></div>
             </div>
           </div>
         ))}
