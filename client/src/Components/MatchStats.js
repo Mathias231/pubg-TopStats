@@ -7,7 +7,8 @@ function MatchStats(props) {
   const [matchList, setMatchList] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState(<></>);
   const [killsSelected, setKillsSelected] = useState(true);
-  const [tableData, setTableData] = useState(<></>);
+  const [matchData, setMatchData] = useState(null);
+  const [topPlayers, setTopPlayers] = useState([]);
   let i = 0;
 
   const nut = useCallback(async () => {
@@ -35,14 +36,36 @@ function MatchStats(props) {
   useEffect(() => {
     nut();
   }, [nut]);
-
+  let topKills = (match, kills) => {
+    console.log(match);
+    let { included } = match;
+    let filteredIncluded = [];
+    setKillsSelected(kills);
+    if (kills === true) {
+      filteredIncluded = included
+        .filter((included) => included.type === 'participant')
+        .sort((a, b) => b.attributes.stats.kills - a.attributes.stats.kills);
+      console.log('trueeee');
+    } else {
+      filteredIncluded = included
+        .filter((included) => included.type === 'participant')
+        .sort(
+          (a, b) =>
+            b.attributes.stats.damageDealt - a.attributes.stats.damageDealt,
+        );
+      console.log('damage dealt');
+    }
+    let top10 = filteredIncluded.slice(0, 10);
+    setTopPlayers(top10);
+    console.log(top10);
+  };
   // Display match data
+
   const displayMatchData = async (event) => {
     let id = event.target.id;
     let match = matchList[id];
-    let attributes = match.data.attributes;
+    //let attributes = match.data.attributes;
     let players = match.included;
-
     // Finding player in array
     let player = players.find((player) => {
       if (
@@ -56,113 +79,25 @@ function MatchStats(props) {
       }
     });
 
-    let topKills = (match, kills) => {
-      let { included } = match;
-      let filteredIncluded = [];
-      setKillsSelected(kills);
-
-      if (kills === true) {
-        filteredIncluded = included
-          .filter((included) => included.type === 'participant')
-          .sort((a, b) => b.attributes.stats.kills - a.attributes.stats.kills);
-        console.log('trueeee');
-      } else {
-        filteredIncluded = included
-          .filter((included) => included.type === 'participant')
-          .sort(
-            (a, b) =>
-              b.attributes.stats.damageDealt - a.attributes.stats.damageDealt,
-          );
-        console.log('damage dealt');
-      }
-
-      let top10 = filteredIncluded.slice(0, 10);
-      console.log(top10);
-
-      setTableData();
+    let matchInfo = {
+      match,
+      player,
+      id,
     };
-
-    let playerAttr = player.attributes.stats;
-    console.log(playerAttr);
-    setSelectedMatch(
-      <div className="matchData">
-        <h1 className="text-center text-xl">Match Data</h1>
-        <div className="grid grid-cols-4 mt-2">
-          <div>
-            <h3 className="font-bold bg-slate-400">
-              Date: {attributes.createdAt.slice(0, 10)}
-            </h3>
-          </div>
-          <div>
-            <h3 className="font-bold bg-slate-400">
-              Map: {attributes.mapName}
-            </h3>
-          </div>
-          <div>
-            <h3 className="font-bold bg-slate-400">
-              Gamemode: {attributes.gameMode}
-            </h3>
-          </div>
-          <div>
-            <h3 className="font-bold bg-slate-400">
-              Match: {attributes.matchType}
-            </h3>
-          </div>
-        </div>
-        <div className="grid grid-cols-2 mt-2">
-          <div className="grid border grid-cols-3">
-            <div className="text-center">
-              <h1>Kills</h1>
-              {playerAttr.kills}
-            </div>
-            <div className="text-center">
-              <h1>Assists</h1>
-              {playerAttr.assists}
-            </div>
-            <div className="text-center">
-              <h1>DMG Dealt</h1>
-              {playerAttr.damageDealt}
-            </div>
-          </div>
-          <div className="grid grid-cols-2">
-            <button
-              id={id}
-              className={`w-42 font-bold border ${
-                killsSelected === true ? 'bg-slate-300' : ''
-              }`}
-              onClick={() => topKills(match, true)}
-            >
-              Kills
-            </button>
-            <button
-              id={id}
-              className={`w-42 font-bold border ${
-                killsSelected === false ? 'bg-slate-300' : ''
-              }`}
-              onClick={() => topKills(match, false)}
-            >
-              DMG
-            </button>
-          </div>
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  {killsSelected ? <th>Kills </th> : <th>DMG dealt</th>}
-                </tr>
-              </thead>
-            </table>
-            {topKills(match, killsSelected)}
-          </div>
-        </div>
-      </div>,
-    );
+    //setTableData();
+    setMatchData(matchInfo);
   };
 
   //Logging MatchList
   // console.log(matchList);
-
+  let attributes = {};
+  let match = {};
+  let playerAttr = {};
+  if (matchData !== null) {
+    attributes = matchData.match.data.attributes;
+    match = matchData.match.data;
+    playerAttr = matchData.player.attributes;
+  }
   return (
     <div className="grid grid-cols-2 mt-1 space-x-4">
       <div className="">
@@ -217,7 +152,98 @@ function MatchStats(props) {
           ))}
         </div>
       </div>
-      {selectedMatch}
+
+      {matchData !== null && console.log(matchData) === undefined && (
+        <>
+          {
+            <div className="matchData">
+              <h1 className="text-center text-xl">Match Data</h1>
+              <div className="grid grid-cols-4 mt-2">
+                <div>
+                  <h3 className="font-bold bg-slate-400">
+                    Date: {match.attributes.createdAt.slice(0, 10)}
+                  </h3>
+                </div>
+                <div>
+                  <h3 className="font-bold bg-slate-400">
+                    Map: {attributes.mapName}
+                  </h3>
+                </div>
+                <div>
+                  <h3 className="font-bold bg-slate-400">
+                    Gamemode: {attributes.gameMode}
+                  </h3>
+                </div>
+                <div>
+                  <h3 className="font-bold bg-slate-400">
+                    Match: {attributes.matchType}
+                  </h3>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 mt-2">
+                <div className="grid border grid-cols-3">
+                  <div className="text-center">
+                    <h1>Kills</h1>
+                    {playerAttr.kills}
+                  </div>
+                  <div className="text-center">
+                    <h1>Assists</h1>
+                    {playerAttr.assists}
+                  </div>
+                  <div className="text-center">
+                    <h1>DMG Dealt</h1>
+                    {playerAttr.damageDealt}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2">
+                  <button
+                    id={match.id}
+                    className={`w-42 font-bold border ${
+                      killsSelected === true ? 'bg-slate-300' : ''
+                    }`}
+                    onClick={() => topKills(matchData.match, true)}
+                  >
+                    Kills
+                  </button>
+                  <button
+                    id={match.id}
+                    className={`w-42 font-bold border ${
+                      killsSelected === false ? 'bg-slate-300' : ''
+                    }`}
+                    onClick={() => topKills(matchData.match, false)}
+                  >
+                    DMG
+                  </button>
+                </div>
+                <div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        {killsSelected ? <th>Kills </th> : <th>DMG dealt</th>}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {topPlayers.map((player) => (
+                        <tr key={player.id}>
+                          <td>{player.attributes.stats.name}</td>
+                          {killsSelected ? (
+                            <td>{player.attributes.stats.kills}</td>
+                          ) : (
+                            <td>
+                              {Math.round(player.attributes.stats.damageDealt)}
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          }
+        </>
+      )}
     </div>
   );
 }
