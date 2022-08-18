@@ -5,7 +5,6 @@ function MatchStats(props) {
   // Variables
   const [data] = useState(props.matches.slice(0, 8));
   const [matchList, setMatchList] = useState([]);
-  const [selectedMatch, setSelectedMatch] = useState(<></>);
   const [killsSelected, setKillsSelected] = useState(true);
   const [matchData, setMatchData] = useState(null);
   const [topPlayers, setTopPlayers] = useState([]);
@@ -36,11 +35,13 @@ function MatchStats(props) {
   useEffect(() => {
     nut();
   }, [nut]);
+
   let topKills = (match, kills) => {
     console.log(match);
     let { included } = match;
     let filteredIncluded = [];
     setKillsSelected(kills);
+
     if (kills === true) {
       filteredIncluded = included
         .filter((included) => included.type === 'participant')
@@ -57,10 +58,10 @@ function MatchStats(props) {
     }
     let top10 = filteredIncluded.slice(0, 10);
     setTopPlayers(top10);
-    console.log(top10);
+    // console.log(top10);
   };
-  // Display match data
 
+  // Display match data
   const displayMatchData = async (event) => {
     let id = event.target.id;
     let match = matchList[id];
@@ -86,6 +87,7 @@ function MatchStats(props) {
     };
     //setTableData();
     setMatchData(matchInfo);
+    topKills(match, true);
   };
 
   //Logging MatchList
@@ -98,6 +100,7 @@ function MatchStats(props) {
     match = matchData.match.data;
     playerAttr = matchData.player.attributes;
   }
+
   return (
     <div className="grid grid-cols-2 mt-1 space-x-4">
       <div className="">
@@ -215,22 +218,31 @@ function MatchStats(props) {
                     DMG
                   </button>
                 </div>
+                <div>wdwdw</div>
                 <div>
-                  <table>
+                  <table className="table-auto border-collapse border">
                     <thead>
                       <tr>
-                        <th>Name</th>
-                        {killsSelected ? <th>Kills </th> : <th>DMG dealt</th>}
+                        <th className="w-48 border">Name</th>
+                        {killsSelected ? (
+                          <th className="w-42 border">Kills </th>
+                        ) : (
+                          <th className="w-42 border">DMG dealt</th>
+                        )}
                       </tr>
                     </thead>
                     <tbody>
                       {topPlayers.map((player) => (
                         <tr key={player.id}>
-                          <td>{player.attributes.stats.name}</td>
+                          <td className="border">
+                            {player.attributes.stats.name}
+                          </td>
                           {killsSelected ? (
-                            <td>{player.attributes.stats.kills}</td>
+                            <td className="border">
+                              {player.attributes.stats.kills}
+                            </td>
                           ) : (
-                            <td>
+                            <td className="border">
                               {Math.round(player.attributes.stats.damageDealt)}
                             </td>
                           )}
