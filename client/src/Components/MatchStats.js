@@ -37,7 +37,7 @@ function MatchStats(props) {
   }, [nut]);
 
   let topKills = (match, kills) => {
-    console.log(match);
+    // console.log(match);
     let { included } = match;
     let filteredIncluded = [];
     setKillsSelected(kills);
@@ -46,7 +46,6 @@ function MatchStats(props) {
       filteredIncluded = included
         .filter((included) => included.type === 'participant')
         .sort((a, b) => b.attributes.stats.kills - a.attributes.stats.kills);
-      console.log('trueeee');
     } else {
       filteredIncluded = included
         .filter((included) => included.type === 'participant')
@@ -54,7 +53,6 @@ function MatchStats(props) {
           (a, b) =>
             b.attributes.stats.damageDealt - a.attributes.stats.damageDealt,
         );
-      console.log('damage dealt');
     }
     let top10 = filteredIncluded.slice(0, 10);
     setTopPlayers(top10);
@@ -87,7 +85,7 @@ function MatchStats(props) {
     };
     //setTableData();
     setMatchData(matchInfo);
-    topKills(match, true);
+    topKills(match, killsSelected);
   };
 
   //Logging MatchList
@@ -187,15 +185,15 @@ function MatchStats(props) {
                 <div className="grid border grid-cols-3">
                   <div className="text-center">
                     <h1>Kills</h1>
-                    {playerAttr.kills}
+                    {playerAttr.stats.kills}
                   </div>
                   <div className="text-center">
-                    <h1>Assists</h1>
-                    {playerAttr.assists}
+                    <h1>Win place</h1>
+                    {playerAttr.stats.winPlace}
                   </div>
                   <div className="text-center">
                     <h1>DMG Dealt</h1>
-                    {playerAttr.damageDealt}
+                    {playerAttr.stats.damageDealt.toFixed()}
                   </div>
                 </div>
                 <div className="grid grid-cols-2">
@@ -218,24 +216,46 @@ function MatchStats(props) {
                     DMG
                   </button>
                 </div>
-                <div>wdwdw</div>
+                <div className="border">
+                  <div className="grid grid-cols-3 mt-2">
+                    <div className="text-center">
+                      <h1>Assists</h1>
+                      {playerAttr.stats.assists}
+                    </div>
+                    <div className="text-center">
+                      <h1>Heals</h1>
+                      {playerAttr.stats.assists}
+                    </div>
+                    <div className="text-center">
+                      <h1>Kill Streaks</h1>
+                      {playerAttr.stats.killStreaks}
+                    </div>
+                  </div>
+                </div>
                 <div>
-                  <table className="table-auto border-collapse border">
+                  <table className="table-fixed border-collapse border">
                     <thead>
                       <tr>
                         <th className="w-48 border">Name</th>
                         {killsSelected ? (
-                          <th className="w-42 border">Kills </th>
+                          <th className="w-48 border">Kills </th>
                         ) : (
-                          <th className="w-42 border">DMG dealt</th>
+                          <th className="w-48 border">DMG dealt</th>
                         )}
                       </tr>
                     </thead>
                     <tbody>
                       {topPlayers.map((player) => (
                         <tr key={player.id}>
-                          <td className="border">
-                            {player.attributes.stats.name}
+                          <td className="border hover:bg-slate-100">
+                            <a
+                              href={
+                                'https://pubg.op.gg/user/' +
+                                player.attributes.stats.name
+                              }
+                            >
+                              {player.attributes.stats.name}
+                            </a>
                           </td>
                           {killsSelected ? (
                             <td className="border">
