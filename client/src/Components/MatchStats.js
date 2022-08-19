@@ -65,6 +65,7 @@ function MatchStats(props) {
     let match = matchList[id];
     //let attributes = match.data.attributes;
     let players = match.included;
+
     // Finding player in array
     let player = players.find((player) => {
       if (
@@ -75,6 +76,8 @@ function MatchStats(props) {
       ) {
         // Returning player "username"
         return player.attributes.stats.name.toLowerCase() === 'bakern999';
+      } else {
+        return false;
       }
     });
 
@@ -106,16 +109,16 @@ function MatchStats(props) {
           <h1 className="text-center text-xl">Latest Matches</h1>
           <div className="grid grid-cols-4">
             <div>
-              <h3 className="font-bold bg-slate-400">Date</h3>
+              <h3 className="font-bold bg-amber-400 text-white">Date</h3>
             </div>
             <div>
-              <h3 className="font-bold bg-slate-400">Map</h3>
+              <h3 className="font-bold bg-amber-400 text-white">Map</h3>
             </div>
             <div>
-              <h3 className="font-bold bg-slate-400">Gamemode</h3>
+              <h3 className="font-bold bg-amber-400 text-white">Gamemode</h3>
             </div>
             <div>
-              <h3 className="font-bold bg-slate-400">More info</h3>
+              <h3 className="font-bold bg-amber-400 text-white">More info</h3>
             </div>
           </div>
 
@@ -161,22 +164,22 @@ function MatchStats(props) {
               <h1 className="text-center text-xl">Match Data</h1>
               <div className="grid grid-cols-4 mt-2">
                 <div>
-                  <h3 className="font-bold bg-slate-400">
+                  <h3 className="font-bold bg-amber-400 text-white">
                     Date: {match.attributes.createdAt.slice(0, 10)}
                   </h3>
                 </div>
                 <div>
-                  <h3 className="font-bold bg-slate-400">
+                  <h3 className="font-bold bg-amber-400 text-white">
                     Map: {attributes.mapName}
                   </h3>
                 </div>
                 <div>
-                  <h3 className="font-bold bg-slate-400">
+                  <h3 className="font-bold bg-amber-400 text-white">
                     Gamemode: {attributes.gameMode}
                   </h3>
                 </div>
                 <div>
-                  <h3 className="font-bold bg-slate-400">
+                  <h3 className="font-bold bg-amber-400 text-white">
                     Match: {attributes.matchType}
                   </h3>
                 </div>
@@ -200,7 +203,7 @@ function MatchStats(props) {
                   <button
                     id={match.id}
                     className={`w-42 font-bold border ${
-                      killsSelected === true ? 'bg-slate-300' : ''
+                      killsSelected === true ? 'bg-amber-400 text-white' : ''
                     }`}
                     onClick={() => topKills(matchData.match, true)}
                   >
@@ -209,7 +212,7 @@ function MatchStats(props) {
                   <button
                     id={match.id}
                     className={`w-42 font-bold border ${
-                      killsSelected === false ? 'bg-slate-300' : ''
+                      killsSelected === false ? 'bg-black text-white' : ''
                     }`}
                     onClick={() => topKills(matchData.match, false)}
                   >
